@@ -1,0 +1,100 @@
+<div class="dev-layout">
+
+  <!-- Sidebar -->
+  <aside class="dev-sidebar">
+
+    <div class="logo">
+      <h2>DevPanel</h2>
+    </div>
+
+    <div class="dev-profile">
+      <p class="label">Logged in as</p>
+      <p class="email">{{ developerEmail }}</p>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+
+  </aside>
+
+
+  <!-- Main Section -->
+  <div class="dev-main">
+
+    <div class="topbar">
+      <h2>Developer Dashboard 👨‍💻</h2>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="upload-section">
+
+      <h3>Upload New File</h3>
+
+      <form (ngSubmit)="uploadFile()" class="upload-form">
+
+        <input 
+          type="text" 
+          placeholder="Enter File Title"
+          [(ngModel)]="title"
+          name="title"
+          required
+        />
+
+        <input 
+          type="text" 
+          placeholder="Enter Description"
+          [(ngModel)]="description"
+          name="description"
+          required
+        />
+
+        <input 
+          type="file" 
+          (change)="onFileSelect($event)"
+          required
+        />
+
+        <button type="submit">Upload File</button>
+
+      </form>
+
+    </div>
+
+
+    <!-- Uploaded Files Section -->
+    <div class="file-section">
+
+      <h3>Your Uploaded Files</h3>
+
+      <div class="file-card" *ngFor="let file of files">
+
+        <div class="file-info">
+          <h4>{{ file.title }}</h4>
+          <p>{{ file.description }}</p>
+
+          <small class="real-name">
+            File Name: {{ file.fileName }}
+          </small>
+        </div>
+
+        <div class="file-actions">
+          <a 
+            [href]="'http://localhost:5000/' + file.fileUrl" 
+            download
+          >
+            Download
+          </a>
+
+          <button (click)="deleteFile(file._id)">
+            Delete
+          </button>
+        </div>
+
+      </div>
+
+      <p *ngIf="files.length === 0" class="empty">
+        No files uploaded yet.
+      </p>
+
+    </div>
+
+  </div>
+</div>

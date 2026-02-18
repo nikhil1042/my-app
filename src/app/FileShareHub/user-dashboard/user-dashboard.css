@@ -1,0 +1,113 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #111827;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand h2 {
+  margin-bottom: 30px;
+}
+
+.user-info {
+  margin-top: auto;
+}
+
+.label {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.name {
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.email {
+  font-size: 13px;
+  color: #d1d5db;
+}
+
+.logout-btn {
+  margin-top: 15px;
+  padding: 8px;
+  width: 100%;
+  background: #ef4444;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 30px;
+  background: #f3f4f6;
+}
+
+.topbar {
+  margin-bottom: 20px;
+}
+
+/* Files */
+.files-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.file-card {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.file-info h4 {
+  margin: 0;
+}
+
+.file-info p {
+  margin: 5px 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.file-info small {
+  color: #9ca3af;
+}
+
+.download-btn {
+  padding: 8px 14px;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.download-btn:hover {
+  background: #1d4ed8;
+}
+
+.empty {
+  text-align: center;
+  color: gray;
+  margin-top: 20px;
+}

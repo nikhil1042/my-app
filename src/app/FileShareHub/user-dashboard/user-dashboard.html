@@ -1,0 +1,52 @@
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>FileShare</h2>
+    </div>
+
+    <div class="user-info">
+      <p class="label">Logged in as</p>
+      <p class="name">{{ userName }}</p>
+      <p class="email">{{ userEmail }}</p>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main">
+
+    <div class="topbar">
+      <h2>Available Files 📂</h2>
+    </div>
+
+    <!-- Files List -->
+    <div class="files-wrapper">
+
+      <div class="file-card" *ngFor="let file of files">
+        <div class="file-info">
+          <h4>{{ file.title }}</h4>
+          <p>{{ file.description }}</p>
+          <small>{{ file.fileName }}</small>
+        </div>
+
+        <div class="file-actions">
+          <a 
+            [href]="'http://localhost:5000/' + file.fileUrl" 
+            target="_blank"
+            class="download-btn"
+          >
+            Download
+          </a>
+        </div>
+      </div>
+
+      <p *ngIf="files.length === 0" class="empty">
+        No files available yet.
+      </p>
+
+    </div>
+
+  </div>
+</div>
