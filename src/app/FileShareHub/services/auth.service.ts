@@ -12,46 +12,33 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  // ✅ Signup
   signup(data: any) {
-    return this.http.post(`${this.apiUrl}/auth/signup`, data).pipe(
-      tap(res => {
-        // Store user name for dashboard
-        localStorage.setItem('name', data.name);
-      })
-    );
+    return this.http.post(`${this.apiUrl}/auth/signup`, data);
   }
 
-  // ✅ Login
   login(data: any) {
     return this.http.post<any>(`${this.apiUrl}/auth/login`, data)
       .pipe(
         tap(res => {
           localStorage.setItem('token', res.token);
           localStorage.setItem('role', res.role);
-          localStorage.setItem('email', data.email);
+          localStorage.setItem('name', res.name);
         })
       );
   }
 
-
-  // ✅ Logout
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
+    localStorage.clear();
   }
 
-  // ✅ Check login status
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
 
-  // ✅ Get current role
   getRole(): string | null {
     return localStorage.getItem('role');
   }
 
-  // ✅ Get token (for interceptor use)
   getToken(): string | null {
     return localStorage.getItem('token');
   }
