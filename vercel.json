@@ -1,4 +1,9 @@
 {
+  "buildCommand": "ng build --configuration production",
+  "outputDirectory": "dist/my-app/browser",
+  "devCommand": "ng serve",
+  "installCommand": "npm install",
+  "framework": "angular",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
