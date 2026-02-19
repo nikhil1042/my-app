@@ -29,7 +29,7 @@ export class DeveloperDashboard implements OnInit {
   sidebarOpen: boolean = false;
   private loadingTimeout: any;
   private hasLoadedOnce: boolean = false;
-  private apiBaseUrl = 'http://localhost:5000/';
+  private apiBaseUrl = 'https://backend-i8c3.onrender.com/';
 
   // Pagination
   private currentPage: number = 1;
@@ -215,10 +215,10 @@ export class DeveloperDashboard implements OnInit {
     }
     
     if (fileUrl.startsWith('/uploads/')) {
-      return 'http://localhost:5000' + fileUrl;
+      return 'https://backend-i8c3.onrender.com' + fileUrl;
     }
     
-    return 'http://localhost:5000' + fileUrl;
+    return 'https://backend-i8c3.onrender.com' + fileUrl;
   }
 
   isImageFile(fileName: string): boolean {

@@ -22,7 +22,7 @@ export class UserDashboard implements OnInit {
   isLoadingSlow: boolean = false;
   sidebarOpen: boolean = false;
   private loadingTimeout: any;
-  private apiBaseUrl = 'http://localhost:5000/';
+  private apiBaseUrl = 'https://backend-i8c3.onrender.com/';
   private hasLoadedOnce: boolean = false;
   
   // Pagination
@@ -139,10 +139,10 @@ export class UserDashboard implements OnInit {
     }
     
     if (fileUrl.startsWith('/uploads/')) {
-      return 'http://localhost:5000' + fileUrl;
+      return 'https://backend-i8c3.onrender.com' + fileUrl;
     }
     
-    return 'http://localhost:5000' + fileUrl;
+    return 'https://backend-i8c3.onrender.com' + fileUrl;
   }
 
   isImageFile(fileName: string): boolean {
