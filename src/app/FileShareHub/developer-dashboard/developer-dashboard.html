@@ -1,99 +1,151 @@
-<div class="dev-layout">
+<div class="layout">
+
+  <!-- Hamburger Menu -->
+  <button class="hamburger" (click)="toggleSidebar()" [class.active]="sidebarOpen">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 
   <!-- Sidebar -->
-  <aside class="dev-sidebar">
-
-    <div class="logo">
-      <h2>DevPanel</h2>
+  <aside class="sidebar" [class.open]="sidebarOpen">
+    <div class="brand">
+      <h2>👨‍💻 DevPanel</h2>
     </div>
 
-    <div class="dev-profile">
-      <p class="label">Logged in as</p>
+    <div class="user-info">
+      <span class="label">Logged in as:</span>
+      <p class="name">{{ developerName }}</p>
       <p class="email">{{ developerEmail }}</p>
       <button class="logout-btn" (click)="logout()">Logout</button>
     </div>
-
   </aside>
 
-
-  <!-- Main Section -->
-  <div class="dev-main">
+  <!-- Main Content -->
+  <div class="main">
 
     <div class="topbar">
-      <h2>Developer Dashboard 👨‍💻</h2>
+      <h2>📤 Upload Files</h2>
     </div>
 
     <!-- Upload Section -->
     <div class="upload-section">
-
-      <h3>Upload New File</h3>
-
+      <h3>📁 Upload New File</h3>
+      
       <form (ngSubmit)="uploadFile()" class="upload-form">
+        
+        <div class="form-group">
+          <label>File Title *</label>
+          <input 
+            type="text" 
+            placeholder="Enter file title (required)"
+            [(ngModel)]="title"
+            name="title"
+            required
+          />
+        </div>
 
-        <input 
-          type="text" 
-          placeholder="Enter File Title"
-          [(ngModel)]="title"
-          name="title"
-          required
-        />
+        <div class="form-group">
+          <label>Description</label>
+          <textarea 
+            placeholder="Enter file description"
+            [(ngModel)]="description"
+            name="description"
+            rows="3"
+          ></textarea>
+        </div>
 
-        <input 
-          type="text" 
-          placeholder="Enter Description"
-          [(ngModel)]="description"
-          name="description"
-          required
-        />
+        <div class="form-group">
+          <label>Select File *</label>
+          <div class="file-input-wrapper">
+            <input 
+              type="file" 
+              (change)="onFileSelect($event)"
+              id="fileInput"
+              required
+            />
+            <label for="fileInput" class="file-input-label">
+              {{ selectedFileName ? '✅ ' + selectedFileName : '📎 Choose File' }}
+            </label>
+          </div>
+        </div>
 
-        <input 
-          type="file" 
-          (change)="onFileSelect($event)"
-          required
-        />
-
-        <button type="submit">Upload File</button>
-
+        <button type="submit" class="submit-btn" [disabled]="isUploading">
+          {{ isUploading ? '⏳ Uploading...' : '⬆️ Upload File' }}
+        </button>
       </form>
-
     </div>
 
+    <!-- Files Section -->
+    <div class="files-section">
+      <h3 style="margin-bottom: 15px;">📋 Your Uploaded Files</h3>
 
-    <!-- Uploaded Files Section -->
-    <div class="file-section">
+      <!-- Loading State -->
+      <div *ngIf="isLoading" style="text-align: center; padding: 40px; color: #7c3aed;">
+        <div class="spinner"></div>
+        <p>Loading files...</p>
+      </div>
 
-      <h3>Your Uploaded Files</h3>
+      <!-- Error State -->
+      <div *ngIf="errorMessage" class="error-container">
+        <p class="error-text">⚠️ {{ errorMessage }}</p>
+        <button (click)="refreshFiles()" class="retry-btn">Retry</button>
+      </div>
 
-      <div class="file-card" *ngFor="let file of files">
+      <!-- Files Grid -->
+      <div class="files-wrapper" *ngIf="!errorMessage && !isLoading">
+        
+        <div class="file-card" *ngFor="let file of files">
 
-        <div class="file-info">
-          <h4>{{ file.title }}</h4>
-          <p>{{ file.description }}</p>
+          <!-- File Info -->
+          <div class="file-info">
+            <h4>{{ file.title }}</h4>
+            <p *ngIf="file.description">{{ file.description }}</p>
+            <small title="File Name">📄 {{ file.fileName }}</small>
 
-          <small class="real-name">
-            File Name: {{ file.fileName }}
-          </small>
+            <!-- Image Preview -->
+            <div *ngIf="isImageFile(file.fileName)" class="image-preview">
+              <img 
+                [src]="getFileUrl(file.fileUrl)"
+                alt="Preview"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <!-- File Actions -->
+          <div class="file-actions">
+            <button
+              (click)="downloadFile(file.fileUrl, file.fileName)"
+              class="download-btn"
+              title="Download File"
+            >
+              ⬇️ Download
+            </button>
+
+            <button 
+              (click)="deleteFile(file._id)"
+              class="delete-btn"
+              title="Delete File"
+            >
+              🗑️ Delete
+            </button>
+          </div>
+
         </div>
 
-        <div class="file-actions">
-          <a 
-            [href]="'http://localhost:5000/' + file.fileUrl" 
-            download
-          >
-            Download
-          </a>
-
-          <button (click)="deleteFile(file._id)">
-            Delete
-          </button>
-        </div>
+        <!-- Empty Message -->
+        <p *ngIf="files.length === 0" class="empty">
+          📭 No files uploaded yet. Upload your first file above!
+        </p>
 
       </div>
 
-      <p *ngIf="files.length === 0" class="empty">
-        No files uploaded yet.
-      </p>
-
+      <!-- Loading More Indicator -->
+      <div *ngIf="isLoadingMore" style="text-align: center; padding: 20px; color: #7c3aed;">
+        <div class="spinner"></div>
+        <p>Loading more files...</p>
+      </div>
     </div>
 
   </div>

@@ -1,13 +1,20 @@
 <div class="layout">
 
+  <!-- Hamburger Menu -->
+  <button class="hamburger" (click)="toggleSidebar()" [class.active]="sidebarOpen">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
   <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" [class.open]="sidebarOpen">
     <div class="brand">
-      <h2>FileShare</h2>
+      <h2>📂 FileShare</h2>
     </div>
 
     <div class="user-info">
-      <p class="label">Logged in as</p>
+      <span class="label">Logged in as:</span>
       <p class="name">{{ userName }}</p>
       <p class="email">{{ userEmail }}</p>
       <button class="logout-btn" (click)="logout()">Logout</button>
@@ -18,34 +25,79 @@
   <div class="main">
 
     <div class="topbar">
-      <h2>Available Files 📂</h2>
+      <h2>📁 Available Files</h2>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" style="text-align: center; padding: 40px; color: #667eea;">
+      <div class="spinner"></div>
+      <p>Loading files...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="errorMessage" class="error-container" style="margin-top: 20px;">
+      <p class="error-text">⚠️ {{ errorMessage }}</p>
+      <button (click)="refreshFiles()" class="retry-btn">Retry</button>
     </div>
 
     <!-- Files List -->
-    <div class="files-wrapper">
+    <div class="files-wrapper" *ngIf="!errorMessage && !isLoading">
 
       <div class="file-card" *ngFor="let file of files">
+
+        <!-- File Info -->
         <div class="file-info">
           <h4>{{ file.title }}</h4>
-          <p>{{ file.description }}</p>
-          <small>{{ file.fileName }}</small>
+          <p *ngIf="file.description">{{ file.description }}</p>
+          <small title="File Name">📄 {{ file.fileName }}</small>
+
+          <!-- Image Preview (only if image file) -->
+          <div *ngIf="isImageFile(file.fileName)"
+               class="image-preview">
+            <img 
+              [src]="getFileUrl(file.fileUrl)"
+              alt="Preview"
+              loading="lazy"
+            />
+          </div>
         </div>
 
+        <!-- File Actions -->
         <div class="file-actions">
+          <!-- View Button -->
           <a 
-            [href]="'http://localhost:5000/' + file.fileUrl" 
+            [href]="getFileUrl(file.fileUrl)"
             target="_blank"
-            class="download-btn"
+            rel="noopener noreferrer"
+            class="view-btn"
+            title="View File"
           >
-            Download
+            👁️ View
           </a>
+
+          <!-- Download Button -->
+          <button
+            (click)="downloadFile(file.fileUrl, file.fileName)"
+            class="download-btn"
+            title="Download File"
+          >
+            ⬇️ Download
+          </button>
         </div>
+
       </div>
 
+      <!-- Empty Message -->
       <p *ngIf="files.length === 0" class="empty">
-        No files available yet.
+        📭 No files available yet.
       </p>
 
+    </div>
+
+    <!-- Loading More Indicator -->
+    <div *ngIf="isLoadingMore" style="text-align: center; padding: 20px; color: #7c3aed;">
+      <div class="spinner"></div>
+      <p>Loading more files...</p>
     </div>
 
   </div>

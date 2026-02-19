@@ -37,9 +37,18 @@ export class FileService {
   }
 
   // ======================
-  // Get All Files
+  // Get All Files with Pagination
   // ======================
-  getFiles(): Observable<FileModel[]> {
+  getFiles(page: number = 1, limit: number = 10): Observable<any> {
+    return this.http.get<any>(
+      `${this.apiUrl}/files?page=${page}&limit=${limit}`
+    );
+  }
+
+  // ======================
+  // Get All Files (Legacy - returns all)
+  // ======================
+  getAllFiles(): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(
       `${this.apiUrl}/files`
     );
