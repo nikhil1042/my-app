@@ -4,11 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production --output-path=dist",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:my-app": "node dist/my-app/server/server.mjs",
-    "vercel-build": "ng build --configuration production --output-path=dist"
+    "test": "ng test"
   },
   "prettier": {
     "printWidth": 100,

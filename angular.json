@@ -30,7 +30,9 @@
             ],
             "styles": [
               "src/styles.css"
-            ]
+            ],
+            "prerender": false,
+            "ssr": false
           },
           "configurations": {
             "production": {
