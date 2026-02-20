@@ -241,7 +241,13 @@ export class DeveloperDashboard implements OnInit {
   }
 
   downloadFile(fileUrl: string, fileName: string) {
-    const url = this.getFileUrl(fileUrl);
+    // Add fl_attachment flag for download
+    let downloadUrl = fileUrl;
+    if (fileUrl.includes('cloudinary.com') && fileUrl.includes('/upload/')) {
+      downloadUrl = fileUrl.replace('/upload/', '/upload/fl_attachment/');
+    }
+    
+    const url = this.getFileUrl(downloadUrl);
     fetch(url)
       .then(response => response.blob())
       .then(blob => {
