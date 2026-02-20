@@ -84,11 +84,16 @@ html {
 .user-info .name {
   font-size: 14px;
   font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
 }
 .user-info .email {
-  font-size: 11px;
-  opacity: 0.8;
+  font-size: 13px;
+  opacity: 1;
   word-break: break-word;
+  margin-bottom: 10px;
+  display: block;
+  color: #fff;
 }
 .logout-btn {
   background: rgba(255, 255, 255, 0.2);
@@ -99,7 +104,6 @@ html {
   cursor: pointer;
   font-size: 12px;
   transition: all 0.3s ease;
-  margin-top: auto;
 }
 .logout-btn:hover {
   background: rgba(255, 255, 255, 0.3);

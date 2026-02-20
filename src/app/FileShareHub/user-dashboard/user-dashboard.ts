@@ -42,7 +42,8 @@ export class UserDashboard implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.userName = localStorage.getItem('name') || 'User';
-      this.userEmail = localStorage.getItem('email') || '';
+      this.userEmail = localStorage.getItem('email') || 'No email';
+      console.log('User Email:', this.userEmail);
       
       const cachedFiles = localStorage.getItem('userFiles');
       if (cachedFiles) {
@@ -164,8 +165,11 @@ export class UserDashboard implements OnInit {
     this.sidebarOpen = !this.sidebarOpen;
   }
 
+  viewFile(fileUrl: string) {
+    window.open(fileUrl, '_blank');
+  }
+
   downloadFile(fileUrl: string, fileName: string) {
-    // Add fl_attachment flag for download
     let downloadUrl = fileUrl;
     if (fileUrl.includes('cloudinary.com') && fileUrl.includes('/upload/')) {
       downloadUrl = fileUrl.replace('/upload/', '/upload/fl_attachment/');

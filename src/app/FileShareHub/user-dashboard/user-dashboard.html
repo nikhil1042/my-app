@@ -10,11 +10,10 @@
   <!-- Sidebar -->
   <aside class="sidebar" [class.open]="sidebarOpen">
     <div class="brand">
-      <h2>📂 FileShare</h2>
+      <h2>📂 User Dashboard</h2>
     </div>
 
     <div class="user-info">
-      <span class="label">Logged in as:</span>
       <p class="name">{{ userName }}</p>
       <p class="email">{{ userEmail }}</p>
       <button class="logout-btn" (click)="logout()">Logout</button>
@@ -64,18 +63,14 @@
 
         <!-- File Actions -->
         <div class="file-actions">
-          <!-- View Button -->
-          <a 
-            [href]="getFileUrl(file.fileUrl)"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            (click)="viewFile(file.fileUrl)"
             class="view-btn"
             title="View File"
           >
             👁️ View
-          </a>
+          </button>
 
-          <!-- Download Button -->
           <button
             (click)="downloadFile(file.fileUrl, file.fileName)"
             class="download-btn"

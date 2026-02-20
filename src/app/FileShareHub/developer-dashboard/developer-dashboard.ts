@@ -48,7 +48,8 @@ export class DeveloperDashboard implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.developerName = localStorage.getItem('name') || 'Developer';
-      this.developerEmail = localStorage.getItem('email') || '';
+      this.developerEmail = localStorage.getItem('email') || 'No email';
+      console.log('Developer Email:', this.developerEmail);
       
       // Load cached files for instant display
       const cachedFiles = localStorage.getItem('devFiles');
@@ -240,8 +241,11 @@ export class DeveloperDashboard implements OnInit {
     this.sidebarOpen = !this.sidebarOpen;
   }
 
+  viewFile(fileUrl: string) {
+    window.open(this.getFileUrl(fileUrl), '_blank');
+  }
+
   downloadFile(fileUrl: string, fileName: string) {
-    // Add fl_attachment flag for download
     let downloadUrl = fileUrl;
     if (fileUrl.includes('cloudinary.com') && fileUrl.includes('/upload/')) {
       downloadUrl = fileUrl.replace('/upload/', '/upload/fl_attachment/');

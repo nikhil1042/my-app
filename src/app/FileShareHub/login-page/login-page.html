@@ -28,7 +28,7 @@
 
       <!-- Developer Access Code -->
       <div class="form-group" *ngIf="developerMode">
-        <input type="text"
+        <input type="password"
                placeholder="Developer Access Code"
                formControlName="accessCode">
         <small *ngIf="loginForm.get('accessCode')?.touched && loginForm.get('accessCode')?.invalid">
