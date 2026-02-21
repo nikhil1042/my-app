@@ -185,7 +185,8 @@ html {
   margin-top: 10px;
 }
 .view-btn,
-.download-btn {
+.download-btn,
+.share-btn {
   flex: 1;
   padding: 8px;
   border-radius: 4px;
@@ -209,6 +210,13 @@ html {
   color: #fff;
 }
 .download-btn:hover {
+  opacity: 0.9;
+}
+.share-btn {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: #fff;
+}
+.share-btn:hover {
   opacity: 0.9;
 }
 .empty {

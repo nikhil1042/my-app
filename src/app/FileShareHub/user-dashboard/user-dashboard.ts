@@ -169,6 +169,22 @@ export class UserDashboard implements OnInit {
     window.open(fileUrl, '_blank');
   }
 
+  shareFile(fileUrl: string, title: string) {
+    const url = this.getFileUrl(fileUrl);
+    if (navigator.share) {
+      navigator.share({
+        title: title,
+        url: url
+      }).catch(err => console.log('Share error:', err));
+    } else {
+      navigator.clipboard.writeText(url).then(() => {
+        alert('✅ Link copied to clipboard!');
+      }).catch(err => {
+        alert('❌ Failed to copy link');
+      });
+    }
+  }
+
   downloadFile(fileUrl: string, fileName: string) {
     let downloadUrl = fileUrl;
     if (fileUrl.includes('cloudinary.com') && fileUrl.includes('/upload/')) {
