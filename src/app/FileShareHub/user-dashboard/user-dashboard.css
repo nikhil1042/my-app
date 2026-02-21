@@ -142,7 +142,7 @@ html {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  height: 269px;
+  height: 300px;
 }
 .file-card:hover {
   transform: translateY(-3px);
